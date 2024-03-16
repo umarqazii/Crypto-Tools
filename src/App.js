@@ -12,7 +12,9 @@ function App() {
   const [atomPrice, setatomPrice] = useState(null);
   const [kdaPrice, setkdaPrice] = useState(null);
   const [icpPrice, seticpPrice] = useState(null);
+  const [maticPrice, setmaticPrice] = useState(null);
   const [fetPrice, setfetPrice] = useState(null);
+  
   
   useEffect(() => {
     const btc = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@trade');
@@ -24,7 +26,9 @@ function App() {
     const atom = new WebSocket('wss://stream.binance.com:9443/ws/atomusdt@trade');
     const kda = new WebSocket('wss://stream.binance.com:9443/ws/kdausdt@trade');
     const icp = new WebSocket('wss://stream.binance.com:9443/ws/icpusdt@trade');
+    const matic = new WebSocket('wss://stream.binance.com:9443/ws/maticusdt@trade');
     const fet = new WebSocket('wss://stream.binance.com:9443/ws/fetusdt@trade');
+
 
     btc.onmessage = (event) => {
       // Extract the price from the incoming message and update the state
@@ -80,6 +84,12 @@ function App() {
       seticpPrice(data.p);
     }
 
+    matic.onmessage = (event) => {
+      // Extract the price from the incoming message and update the state
+      const data = JSON.parse(event.data);
+      setmaticPrice(data.p);
+    }
+
     fet.onmessage = (event) => {
       // Extract the price from the incoming message and update the state
       const data = JSON.parse(event.data);
@@ -97,6 +107,7 @@ function App() {
       atom.close();
       kda.close();
       icp.close();
+      matic.close();
       fet.close();
     };
   }, []);
@@ -104,7 +115,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Realtime Prices</h1>
+        <h1>Live Prices</h1>
         <p>Bitcoin: {btcprice !== null ? `$${btcprice}` : 'Loading...'}</p>
         <p>Ethereum: {ethprice !== null ? `$${ethprice}` : 'Loading...'}</p>
         <p>Cardano: {adaPrice !== null ? `$${adaPrice}` : 'Loading...'}</p>
@@ -114,6 +125,7 @@ function App() {
         <p>Cosmos: {atomPrice !== null ? `$${atomPrice}` : 'Loading...'}</p>
         <p>Kadena: {kdaPrice !== null ? `$${kdaPrice}` : 'Loading...'}</p>
         <p>ICP: {icpPrice !== null ? `$${icpPrice}` : 'Loading...'}</p>
+        <p>Matic: {maticPrice !== null ? `$${maticPrice}` : 'Loading...'}</p>
         <p>Fetch AI: {fetPrice !== null ? `$${fetPrice}` : 'Loading...'}</p>
       </header>
     </div>
