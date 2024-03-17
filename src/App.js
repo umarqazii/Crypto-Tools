@@ -115,7 +115,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Live Prices</h1>
+        <h1>Saran Chutiya</h1>
         <p>Bitcoin: {btcprice !== null ? `$${btcprice}` : 'Loading...'}</p>
         <p>Ethereum: {ethprice !== null ? `$${ethprice}` : 'Loading...'}</p>
         <p>Cardano: {adaPrice !== null ? `$${adaPrice}` : 'Loading...'}</p>
